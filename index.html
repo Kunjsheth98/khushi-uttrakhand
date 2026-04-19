@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#1A1240">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Mittal Parivaar • Uttarakhand Yatra 2026</title>
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&family=Nunito:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   DESIGN TOKENS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+:root {
+  --saffron:       #F4821E;
+  --saffron-d:     #C96710;
+  --saffron-l:     #FEF0DE;
+  --maroon:        #8B1A1A;
+  --maroon-d:      #5C1010;
+  --gold:          #C9961A;
+  --gold-l:        #F7E59A;
+  --forest:        #2D5A1B;
+  --sky-top:       #0D0A2E;
+  --cream:         #FDF6EC;
+  --warm-white:    #FFFCF7;
+  --text:          #2C1810;
+  --text-m:        #6B4530;
+  --text-l:        #A07860;
+  --border:        rgba(200,150,100,0.22);
+  --border-s:      rgba(200,150,100,0.12);
+  --sh-sm:         0 2px 8px rgba(44,24,16,0.07);
+  --sh-md:         0 4px 20px rgba(44,24,16,0.11);
+  --sh-lg:         0 8px 40px rgba(44,24,16,0.17);
+  --r:             16px;
+  --r-s:           10px;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   RESET & BASE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{
+  font-family:'Nunito',sans-serif;
+  background:var(--cream);
+  color:var(--text);
+  min-height:100vh;
+  max-width:430px;
+  margin:0 auto;
+  overflow-x:hidden;
+  -webkit-tap-highlight-color:transparent;
+}
+button{font-family:'Nunito',sans-serif;cursor:pointer;}
+input,textarea{font-family:'Nunito',sans-serif;-webkit-user-select:auto;user-select:auto;}
+textarea{resize:none;}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SETUP BANNER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#setup-banner{
+  display:none;
+  background:linear-gradient(135deg,#1A1240 0%,#3B2470 100%);
+  padding:16px 18px;
+  border-bottom:2px solid rgba(201,150,26,0.3);
+}
+#setup-banner.on{display:block;}
+.sb-title{
+  font-family:'Cinzel',serif;
+  font-size:13px;font-weight:600;
+  color:var(--gold-l);margin-bottom:8px;
+}
+.sb-step{
+  background:rgba(255,255,255,0.07);
+  border-left:3px solid var(--gold);
+  border-radius:0 8px 8px 0;
+  padding:8px 12px;margin:5px 0;
+  font-size:12px;color:rgba(255,255,255,0.8);
+  line-height:1.5;
+}
+.sb-step code{
+  background:rgba(255,255,255,0.15);
+  padding:1px 5px;border-radius:3px;
+  font-size:11px;font-family:monospace;
+  color:#FFD;
+}
+.sb-note{
+  margin-top:10px;font-size:11px;
+  color:rgba(255,255,255,0.5);
+  font-style:italic;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   HEADER — MOUNTAIN SCENE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#header{
+  position:relative;
+  height:270px;
+  overflow:hidden;
+  background:var(--sky-top);
+}
+#mountain-svg{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+}
+#header-content{
+  position:relative;z-index:3;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:flex-end;
+  height:100%;
+  padding:0 20px 22px;
+  text-align:center;
+}
+.h-super{
+  font-family:'Cinzel',serif;
+  font-size:9px;letter-spacing:4px;
+  text-transform:uppercase;
+  color:var(--gold-l);opacity:0.75;
+  margin-bottom:8px;
+}
+.h-title{
+  font-family:'Cinzel Decorative',serif;
+  font-size:22px;font-weight:700;
+  color:#FFF8EE;
+  text-shadow:0 2px 16px rgba(0,0,0,0.5);
+  line-height:1.15;margin-bottom:6px;
+}
+.h-sub{
+  font-family:'Cinzel',serif;
+  font-size:11px;letter-spacing:2px;
+  color:var(--gold-l);
+  text-shadow:0 1px 6px rgba(0,0,0,0.4);
+  opacity:0.9;
+}
+.h-mahadev{
+  font-size:11px;
+  color:rgba(255,255,255,0.45);
+  letter-spacing:3px;
+  margin-top:6px;
+  font-style:italic;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   COUNTDOWN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#countdown{
+  background:linear-gradient(135deg,var(--maroon) 0%,#6B1414 100%);
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+}
+.cd-box{
+  background:rgba(255,255,255,0.1);
+  border:1px solid rgba(255,200,100,0.18);
+  border-radius:10px;padding:8px 10px;
+  min-width:54px;text-align:center;
+}
+.cd-val{
+  font-family:'Cinzel',serif;
+  font-size:22px;font-weight:700;
+  color:#FFF8EE;line-height:1;
+}
+.cd-lbl{
+  font-size:8px;letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--gold-l);opacity:0.65;
+  margin-top:3px;
+}
+.cd-sep{
+  font-family:'Cinzel',serif;
+  font-size:20px;font-weight:700;
+  color:var(--gold);opacity:0.4;
+  margin-bottom:14px;
+}
+.cd-tagline{
+  font-size:11px;color:var(--gold-l);
+  opacity:0.6;margin-left:8px;
+  line-height:1.3;text-align:center;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   USER BAR
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#user-bar{
+  background:var(--warm-white);
+  border-bottom:1px solid var(--border);
+  padding:10px 16px;
+  display:flex;align-items:center;
+  justify-content:space-between;
+}
+.ub-left{display:flex;align-items:center;gap:10px;}
+.u-avatar{
+  width:32px;height:32px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:800;
+  color:white;flex-shrink:0;
+  background:#CCC;
+  transition:background 0.3s;
+}
+.ub-name{font-size:13px;font-weight:700;color:var(--text);}
+.ub-role{font-size:10px;color:var(--text-l);}
+#change-btn{
+  font-size:12px;font-weight:700;
+  color:var(--saffron);
+  background:none;border:none;
+  padding:5px 10px;border-radius:8px;
+  transition:background 0.15s;
+}
+#change-btn:active{background:var(--saffron-l);}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   FILTER STRIP (person filter)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#filter-strip{
+  background:var(--warm-white);
+  border-bottom:1px solid var(--border-s);
+  padding:8px 12px;
+  display:flex;gap:7px;
+  overflow-x:auto;-webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+}
+#filter-strip::-webkit-scrollbar{display:none;}
+.filter-pill{
+  padding:5px 12px;border-radius:14px;
+  border:1.5px solid var(--border);
+  background:white;
+  font-size:11px;font-weight:700;
+  color:var(--text-m);
+  white-space:nowrap;flex-shrink:0;
+  display:flex;align-items:center;gap:5px;
+  transition:all 0.15s;
+}
+.filter-pill.active{
+  background:var(--saffron);
+  border-color:var(--saffron);
+  color:white;
+}
+.f-dot{
+  width:14px;height:14px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:8px;font-weight:800;color:white;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   TAB BAR
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#tabs-bar{
+  background:var(--warm-white);
+  border-bottom:2px solid var(--border);
+  padding:10px 12px;
+  display:flex;gap:8px;
+  overflow-x:auto;-webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  position:sticky;top:0;z-index:10;
+  box-shadow:var(--sh-sm);
+}
+#tabs-bar::-webkit-scrollbar{display:none;}
+.tab{
+  display:flex;align-items:center;gap:5px;
+  padding:7px 14px;
+  border-radius:20px;
+  border:1.5px solid var(--border);
+  background:white;
+  font-size:12px;font-weight:700;
+  color:var(--text-m);
+  white-space:nowrap;flex-shrink:0;
+  transition:all 0.2s;
+}
+.tab .t-count{
+  background:var(--border);
+  border-radius:10px;padding:1px 6px;
+  font-size:10px;color:var(--text-l);
+  transition:all 0.2s;
+}
+.tab.active{
+  background:var(--saffron);
+  border-color:var(--saffron);
+  color:white;
+}
+.tab.active .t-count{
+  background:rgba(255,255,255,0.25);
+  color:white;
+}
+.tab-emoji{font-size:14px;}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   STATS BAR
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#stats-bar{
+  background:var(--warm-white);
+  padding:10px 16px;
+  display:flex;align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--border-s);
+}
+.stat-chip{
+  font-size:11px;font-weight:700;
+  color:var(--text-l);
+  display:flex;align-items:center;gap:4px;
+}
+.stat-num{
+  font-family:'Cinzel',serif;
+  font-size:14px;color:var(--saffron);
+}
+.progress-wrap{
+  flex:1;margin:0 16px;
+  height:5px;background:var(--border);
+  border-radius:3px;overflow:hidden;
+}
+#progress-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--saffron),var(--gold));
+  border-radius:3px;
+  transition:width 0.4s ease;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   LIST AREA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#list-wrap{
+  padding:14px 14px 110px;
+  display:flex;flex-direction:column;gap:10px;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   ITEM CARD
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.item-card{
+  background:white;
+  border-radius:var(--r);
+  padding:13px 12px;
+  box-shadow:var(--sh-sm);
+  border:1px solid var(--border);
+  border-left:4px solid transparent;
+  display:flex;align-items:flex-start;gap:11px;
+  animation:slideIn 0.25s ease-out both;
+  transition:box-shadow 0.2s,transform 0.1s;
+}
+.item-card:active{transform:scale(0.99);}
+
+@keyframes slideIn{
+  from{opacity:0;transform:translateY(12px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+.i-check{
+  width:23px;height:23px;border-radius:50%;
+  border:2px solid var(--border);
+  flex-shrink:0;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.2s;margin-top:1px;
+  background:white;
+}
+.i-check.done-check{
+  background:var(--saffron);
+  border-color:var(--saffron);
+}
+.i-check.done-check::after{
+  content:'✓';color:white;
+  font-size:13px;font-weight:800;
+}
+.i-body{flex:1;min-width:0;}
+.i-text{
+  font-size:14px;font-weight:600;
+  color:var(--text);line-height:1.45;
+  word-wrap:break-word;
+  transition:all 0.2s;
+}
+.i-text.struck{
+  text-decoration:line-through;
+  color:var(--text-l);font-weight:400;
+}
+.i-meta{
+  display:flex;align-items:center;
+  flex-wrap:wrap;gap:5px;
+  margin-top:7px;
+}
+.by-chip{
+  display:inline-flex;align-items:center;gap:4px;
+  border-radius:12px;padding:2px 8px;
+  font-size:11px;font-weight:700;
+  background:var(--saffron-l);
+  color:var(--saffron-d);
+}
+.by-dot{
+  width:14px;height:14px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:8px;font-weight:800;color:white;
+}
+.cat-tag{
+  font-size:10px;font-weight:700;
+  border-radius:8px;padding:2px 8px;
+}
+.i-time{font-size:10px;color:var(--text-l);}
+.i-del{
+  background:none;border:none;
+  width:32px;height:32px;
+  border-radius:8px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;color:var(--text-l);
+  transition:all 0.15s;
+}
+.i-del:active{background:#FEE2E2;color:#DC2626;}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   EMPTY STATE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#empty-state{
+  display:none;
+  flex-direction:column;align-items:center;
+  padding:60px 30px;text-align:center;gap:10px;
+}
+#empty-state.on{display:flex;}
+.es-icon{font-size:52px;margin-bottom:4px;}
+.es-title{font-size:17px;font-weight:800;color:var(--text-m);}
+.es-sub{font-size:13px;color:var(--text-l);line-height:1.6;}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   ITINERARY PLACEHOLDER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#itinerary-view{
+  display:none;
+  padding:20px 16px 100px;
+}
+#itinerary-view.on{display:block;}
+.itin-coming{
+  background:white;border-radius:var(--r);
+  padding:30px 24px;text-align:center;
+  box-shadow:var(--sh-sm);
+  border:1px solid var(--border);
+  margin-bottom:14px;
+}
+.itin-icon{font-size:44px;margin-bottom:12px;}
+.itin-title{
+  font-family:'Cinzel',serif;
+  font-size:15px;font-weight:600;
+  color:var(--text);margin-bottom:8px;
+}
+.itin-desc{font-size:13px;color:var(--text-l);line-height:1.6;}
+.route-card{
+  background:white;border-radius:var(--r);
+  padding:16px;box-shadow:var(--sh-sm);
+  border:1px solid var(--border);
+  border-left:4px solid var(--saffron);
+  margin-bottom:10px;
+}
+.route-stop{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 0;
+  border-bottom:1px solid var(--border-s);
+}
+.route-stop:last-child{border-bottom:none;}
+.stop-num{
+  width:28px;height:28px;border-radius:50%;
+  background:var(--saffron-l);
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:800;
+  color:var(--saffron-d);flex-shrink:0;
+}
+.stop-name{font-size:13px;font-weight:700;color:var(--text);}
+.stop-dist{font-size:11px;color:var(--text-l);}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   NOTES VIEW
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#notes-view{
+  display:none;
+  padding:16px 14px 110px;
+}
+#notes-view.on{display:block;}
+.notes-textarea{
+  width:100%;min-height:200px;
+  border:1.5px solid var(--border);
+  border-radius:var(--r);
+  padding:14px;
+  font-size:14px;
+  background:white;
+  color:var(--text);
+  outline:none;
+  box-shadow:var(--sh-sm);
+  transition:border-color 0.2s;
+  line-height:1.6;
+}
+.notes-textarea:focus{border-color:var(--saffron);}
+.notes-save-btn{
+  width:100%;margin-top:12px;
+  padding:13px;border-radius:var(--r-s);
+  background:linear-gradient(135deg,var(--saffron),var(--saffron-d));
+  color:white;font-size:14px;font-weight:700;
+  border:none;
+  box-shadow:0 4px 16px rgba(244,130,30,0.28);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   FAB
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#fab{
+  position:fixed;bottom:26px;right:20px;
+  width:58px;height:58px;border-radius:18px;
+  background:linear-gradient(135deg,var(--saffron) 0%,var(--saffron-d) 100%);
+  box-shadow:0 4px 22px rgba(244,130,30,0.45),0 2px 8px rgba(0,0,0,0.15);
+  border:none;
+  display:flex;align-items:center;justify-content:center;
+  font-size:30px;color:white;z-index:20;
+  transition:transform 0.15s,box-shadow 0.15s;
+}
+#fab:active{transform:scale(0.91);box-shadow:0 2px 10px rgba(244,130,30,0.3);}
+@media(min-width:430px){#fab{right:calc(50vw - 195px);}}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   OVERLAY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#overlay{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,0.48);
+  z-index:30;display:none;
+  backdrop-filter:blur(2px);
+}
+#overlay.on{display:block;}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   BOTTOM SHEETS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.sheet{
+  position:fixed;bottom:0;
+  left:50%;transform:translateX(-50%) translateY(105%);
+  width:100%;max-width:430px;
+  background:white;
+  border-radius:24px 24px 0 0;
+  z-index:40;
+  padding-bottom:env(safe-area-inset-bottom,16px);
+  transition:transform 0.38s cubic-bezier(0.34,1.04,0.64,1);
+  max-height:92vh;overflow-y:auto;
+}
+.sheet.open{transform:translateX(-50%) translateY(0);}
+.sh-handle{
+  width:40px;height:4px;
+  background:#E8E0D8;border-radius:2px;
+  margin:12px auto 0;
+}
+.sh-hdr{
+  padding:16px 20px 10px;
+  display:flex;align-items:center;
+  justify-content:space-between;
+}
+.sh-title{
+  font-family:'Cinzel',serif;
+  font-size:16px;font-weight:600;
+  color:var(--text);
+}
+.sh-x{
+  width:30px;height:30px;border-radius:50%;
+  background:#F5F0EB;border:none;
+  font-size:14px;color:var(--text-m);
+  display:flex;align-items:center;justify-content:center;
+}
+.sh-body{padding:0 20px 24px;}
+
+/* Sheet form elements */
+.f-label{
+  font-size:11px;font-weight:800;
+  letter-spacing:1.2px;text-transform:uppercase;
+  color:var(--text-l);margin-bottom:8px;margin-top:14px;
+}
+.f-input{
+  width:100%;
+  border:1.5px solid var(--border);
+  border-radius:var(--r-s);
+  padding:12px 14px;
+  font-size:15px;color:var(--text);
+  background:var(--warm-white);
+  outline:none;transition:border-color 0.2s;
+}
+.f-input:focus{border-color:var(--saffron);}
+.f-input::placeholder{color:var(--text-l);}
+.f-textarea{min-height:80px;}
+
+.cat-grid{
+  display:flex;flex-wrap:wrap;gap:8px;
+}
+.cat-opt{
+  padding:7px 13px;border-radius:16px;
+  border:1.5px solid var(--border);
+  background:white;
+  font-size:12px;font-weight:700;
+  color:var(--text-m);
+  display:flex;align-items:center;gap:4px;
+  transition:all 0.15s;
+}
+.cat-opt.sel{
+  border-color:var(--saffron);
+  background:var(--saffron-l);
+  color:var(--saffron-d);
+}
+
+.add-by-box{
+  background:var(--saffron-l);
+  border-radius:var(--r-s);
+  padding:10px 14px;
+  display:flex;align-items:center;gap:10px;
+}
+.ab-lbl{font-size:11px;color:var(--text-l);}
+.ab-name{font-size:13px;font-weight:800;color:var(--saffron-d);}
+
+.submit-btn{
+  width:100%;margin-top:18px;
+  padding:15px;border-radius:var(--r-s);
+  background:linear-gradient(135deg,var(--saffron) 0%,var(--saffron-d) 100%);
+  color:white;font-size:15px;font-weight:800;
+  border:none;
+  box-shadow:0 4px 18px rgba(244,130,30,0.32);
+  transition:transform 0.1s,box-shadow 0.1s;
+}
+.submit-btn:active{transform:scale(0.98);}
+.submit-btn:disabled{opacity:0.5;}
+
+/* Name presets */
+.name-presets{
+  display:flex;flex-wrap:wrap;gap:8px;
+  margin-bottom:4px;
+}
+.name-pre{
+  padding:7px 16px;border-radius:16px;
+  border:1.5px solid var(--border);
+  background:white;
+  font-size:13px;font-weight:700;
+  color:var(--text-m);transition:all 0.15s;
+}
+.name-pre:active{
+  background:var(--saffron-l);
+  border-color:var(--saffron);
+  color:var(--saffron-d);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   DELETE CONFIRM
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#del-overlay{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,0.4);
+  z-index:50;display:none;
+  align-items:flex-end;justify-content:center;
+}
+#del-overlay.on{display:flex;}
+.del-sheet{
+  width:100%;max-width:430px;
+  background:white;
+  border-radius:24px 24px 0 0;
+  padding:24px 20px calc(28px + env(safe-area-inset-bottom,0px));
+  text-align:center;
+}
+.del-icon{font-size:42px;margin-bottom:10px;}
+.del-title{font-size:17px;font-weight:800;color:var(--text);margin-bottom:6px;}
+.del-sub{font-size:13px;color:var(--text-l);margin-bottom:22px;line-height:1.5;}
+.del-btns{display:flex;gap:10px;}
+.del-cancel{
+  flex:1;padding:13px;border-radius:var(--r-s);
+  background:#F5F0EB;border:none;
+  font-size:14px;font-weight:800;color:var(--text-m);
+}
+.del-ok{
+  flex:1;padding:13px;border-radius:var(--r-s);
+  background:#DC2626;border:none;
+  font-size:14px;font-weight:800;color:white;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   TOAST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#toast{
+  position:fixed;bottom:100px;
+  left:50%;
+  transform:translateX(-50%) translateY(16px);
+  background:#2C1810;color:white;
+  padding:10px 22px;border-radius:22px;
+  font-size:13px;font-weight:700;
+  z-index:60;opacity:0;
+  transition:all 0.25s;
+  pointer-events:none;white-space:nowrap;
+}
+#toast.on{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   DECORATIVE BG MANDALA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#mandala{
+  position:fixed;bottom:-80px;right:-60px;
+  width:240px;height:240px;
+  opacity:0.04;pointer-events:none;z-index:0;
+}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND MANDALA -->
+<svg id="mandala" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <g stroke="#F4821E" fill="none" stroke-width="0.8" transform="translate(100,100)">
+    <circle r="90"/><circle r="75"/><circle r="60"/><circle r="45"/>
+    <circle r="30"/><circle r="15"/>
+    <line x1="-90" y1="0" x2="90" y2="0"/>
+    <line x1="0" y1="-90" x2="0" y2="90"/>
+    <line x1="-64" y1="-64" x2="64" y2="64"/>
+    <line x1="64" y1="-64" x2="-64" y2="64"/>
+    <line x1="-90" y1="-35" x2="90" y2="-35"/>
+    <line x1="-90" y1="35" x2="90" y2="35"/>
+    <line x1="-35" y1="-90" x2="-35" y2="90"/>
+    <line x1="35" y1="-90" x2="35" y2="90"/>
+    <polygon points="0,-45 52,22 -52,22" stroke-width="0.5"/>
+    <polygon points="0,45 52,-22 -52,-22" stroke-width="0.5"/>
+  </g>
+</svg>
+
+<!-- SETUP BANNER -->
+<div id="setup-banner">
+  <div class="sb-title">🔧 Firebase Setup Needed — Read This First</div>
+  <p style="font-size:12px;color:rgba(255,255,255,0.65);margin-bottom:8px;">
+    To sync lists between everyone's phones, follow these steps (takes ~5 minutes):
+  </p>
+  <div class="sb-step">1. Go to <strong>console.firebase.google.com</strong> → Sign in → Create project named <code>mittal-yatra-2026</code></div>
+  <div class="sb-step">2. Inside project → Click <strong>"Firestore Database"</strong> → Create database → Choose <strong>test mode</strong> → Pick <code>asia-south1 (Mumbai)</code> region</div>
+  <div class="sb-step">3. Go to Project Settings (⚙️ icon) → "Your apps" → Click <code>&lt;/&gt;</code> → Register app → <strong>Copy the firebaseConfig object</strong></div>
+  <div class="sb-step">4. Open <code>index.html</code> in any text editor → Find the <code>firebaseConfig</code> object near the bottom → Replace each <code>YOUR_...</code> value with yours</div>
+  <div class="sb-step">5. Save & push to GitHub Pages — all three of you will see each other's items in real-time! 🎉</div>
+  <div class="sb-note">⚡ Until Firebase is set up, items save only on this device (not shared). The app still works fully offline!</div>
+</div>
+
+<!-- HEADER -->
+<div id="header">
+  <svg id="mountain-svg" viewBox="0 0 430 270" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%"   stop-color="#0D0A2E"/>
+        <stop offset="40%"  stop-color="#3D1C40"/>
+        <stop offset="70%"  stop-color="#8B3820"/>
+        <stop offset="100%" stop-color="#F4821E"/>
+      </linearGradient>
+      <radialGradient id="glow" cx="50%" cy="95%" r="55%">
+        <stop offset="0%"   stop-color="#FFB340" stop-opacity="0.55"/>
+        <stop offset="100%" stop-color="#F4821E" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="mtn-a" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%"   stop-color="#7A8FA8"/>
+        <stop offset="100%" stop-color="#3A5068"/>
+      </linearGradient>
+      <linearGradient id="mtn-b" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%"   stop-color="#2E3F50"/>
+        <stop offset="100%" stop-color="#1A2530"/>
+      </linearGradient>
+    </defs>
+
+    <!-- Sky -->
+    <rect width="430" height="270" fill="url(#sky)"/>
+    <!-- Sun glow -->
+    <ellipse cx="215" cy="270" rx="220" ry="90" fill="url(#glow)"/>
+
+    <!-- Stars -->
+    <circle cx="28"  cy="16" r="1.2" fill="white" opacity="0.9"/>
+    <circle cx="62"  cy="7"  r="0.9" fill="white" opacity="0.7"/>
+    <circle cx="98"  cy="24" r="1.1" fill="white" opacity="0.8"/>
+    <circle cx="145" cy="11" r="1.4" fill="white" opacity="0.9"/>
+    <circle cx="188" cy="4"  r="0.8" fill="white" opacity="0.65"/>
+    <circle cx="235" cy="19" r="1.0" fill="white" opacity="0.75"/>
+    <circle cx="278" cy="7"  r="0.9" fill="white" opacity="0.8"/>
+    <circle cx="324" cy="21" r="1.3" fill="white" opacity="0.85"/>
+    <circle cx="375" cy="9"  r="0.8" fill="white" opacity="0.7"/>
+    <circle cx="416" cy="23" r="1.1" fill="white" opacity="0.8"/>
+    <circle cx="48"  cy="38" r="0.7" fill="white" opacity="0.55"/>
+    <circle cx="120" cy="33" r="0.8" fill="white" opacity="0.6"/>
+    <circle cx="200" cy="30" r="0.6" fill="white" opacity="0.5"/>
+    <circle cx="308" cy="36" r="0.7" fill="white" opacity="0.55"/>
+    <circle cx="398" cy="30" r="0.9" fill="white" opacity="0.65"/>
+    <!-- Moon -->
+    <circle cx="370" cy="30" r="10" fill="#FFF5DC" opacity="0.18"/>
+    <circle cx="374" cy="28" r="8"  fill="#0D0A2E" opacity="0.18"/>
+
+    <!-- Far mountains (hazy, snow-capped Himalayas) -->
+    <path d="M-10,190 L25,110 L75,150 L125,80 L175,115 L225,55 L275,100 L325,60 L380,105 L430,70 L440,190Z"
+          fill="url(#mtn-a)" opacity="0.55"/>
+    <!-- Snow caps -->
+    <path d="M225,55 L242,82 L208,82Z"  fill="white" opacity="0.72"/>
+    <path d="M125,80 L140,100 L110,100Z" fill="white" opacity="0.65"/>
+    <path d="M325,60 L340,85 L310,85Z"  fill="white" opacity="0.62"/>
+    <path d="M25,110 L37,130 L13,130Z"  fill="white" opacity="0.55"/>
+
+    <!-- Mid mountains -->
+    <path d="M-10,230 L35,168 L95,195 L165,145 L230,175 L295,130 L355,165 L405,140 L440,158 L440,270 L-10,270Z"
+          fill="url(#mtn-b)" opacity="0.8"/>
+    <path d="M295,130 L312,158 L278,158Z" fill="white" opacity="0.52"/>
+
+    <!-- Foreground dark range -->
+    <path d="M-10,270 L-10,215 L45,182 L110,205 L168,170 L225,195 L280,162 L338,185 L392,163 L440,180 L440,270Z"
+          fill="#141D26" opacity="0.97"/>
+
+    <!-- ─── Kedarnath Temple Silhouette ─── -->
+    <g transform="translate(168,148)" opacity="0.92">
+      <!-- Main shikhara spire -->
+      <polygon points="40,0 49,20 31,20"  fill="#3A0808"/>
+      <rect x="33" y="20" width="14" height="5"  fill="#3A0808"/>
+      <polygon points="28,25 52,25 56,32 24,32" fill="#350808"/>
+      <!-- Amalaka (ring) -->
+      <rect x="30" y="32" width="20" height="3"  fill="#400A0A"/>
+      <!-- Hall (mandapa) -->
+      <rect x="18" y="35" width="44" height="28" fill="#2A0606"/>
+      <!-- Roof of hall -->
+      <polygon points="14,35 66,35 70,42 10,42" fill="#380808"/>
+      <!-- Door arch -->
+      <path d="M34,63 L34,48 Q40,41 46,48 L46,63Z" fill="#180404"/>
+      <!-- Side columns -->
+      <rect x="20" y="35" width="5" height="28" fill="#320808"/>
+      <rect x="55" y="35" width="5" height="28" fill="#320808"/>
+      <!-- Platform (jagati) -->
+      <rect x="12" y="63" width="56" height="5"  fill="#2E0606"/>
+      <rect x="6"  y="68" width="68" height="4"  fill="#260505"/>
+      <rect x="0"  y="72" width="80" height="5"  fill="#1E0404"/>
+    </g>
+
+    <!-- Prayer flags -->
+    <path d="M152,162 Q215,138 278,162" fill="none" stroke="#C9961A"
+          stroke-width="0.6" opacity="0.5" stroke-dasharray="2,3"/>
+    <rect x="152" y="158" width="6"  height="5" fill="#DC2626"  opacity="0.6"/>
+    <rect x="162" y="155" width="6"  height="5" fill="#F4821E"  opacity="0.6"/>
+    <rect x="172" y="153" width="6"  height="5" fill="#2196F3"  opacity="0.5"/>
+    <rect x="218" y="134" width="6"  height="5" fill="#4CAF50"  opacity="0.5"/>
+    <rect x="228" y="137" width="6"  height="5" fill="#9C27B0"  opacity="0.5"/>
+    <rect x="238" y="139" width="6"  height="5" fill="#FFEB3B"  opacity="0.5"/>
+    <rect x="268" y="155" width="6"  height="5" fill="#DC2626"  opacity="0.55"/>
+    <rect x="278" y="157" width="6"  height="5" fill="#F4821E"  opacity="0.55"/>
+
+    <!-- Ground fog -->
+    <ellipse cx="215" cy="235" rx="215" ry="22" fill="#1A0A06" opacity="0.35"/>
+  </svg>
+
+  <!-- Text overlay -->
+  <div id="header-content">
+    <div class="h-super">🕉️ &nbsp; Char Dham Yatra &nbsp; 🕉️</div>
+    <div class="h-title">Mittal Parivaar</div>
+    <div class="h-sub">🏔️ &nbsp; Uttarakhand &nbsp;•&nbsp; 8 May 2026 &nbsp; 🏔️</div>
+    <div class="h-mahadev">Har Har Mahadev</div>
+  </div>
+</div>
+
+<!-- COUNTDOWN -->
+<div id="countdown">
+  <div class="cd-box">
+    <div class="cd-val" id="cd-d">--</div>
+    <div class="cd-lbl">Days</div>
+  </div>
+  <div class="cd-sep">:</div>
+  <div class="cd-box">
+    <div class="cd-val" id="cd-h">--</div>
+    <div class="cd-lbl">Hours</div>
+  </div>
+  <div class="cd-sep">:</div>
+  <div class="cd-box">
+    <div class="cd-val" id="cd-m">--</div>
+    <div class="cd-lbl">Mins</div>
+  </div>
+  <div class="cd-sep">:</div>
+  <div class="cd-box">
+    <div class="cd-val" id="cd-s">--</div>
+    <div class="cd-lbl">Secs</div>
+  </div>
+  <div class="cd-tagline">until the<br>journey<br>begins 🙏</div>
+</div>
+
+<!-- USER BAR -->
+<div id="user-bar">
+  <div class="ub-left">
+    <div class="u-avatar" id="u-avatar">?</div>
+    <div>
+      <div class="ub-name" id="u-name">Tap to set your name</div>
+      <div class="ub-role">Mittal Parivaar Yatra 2026</div>
+    </div>
+  </div>
+  <button id="change-btn" onclick="openNameSheet()">Change</button>
+</div>
+
+<!-- PERSON FILTER STRIP -->
+<div id="filter-strip">
+  <button class="filter-pill active" data-person="all" onclick="setPersonFilter(this)">👥 Everyone</button>
+  <!-- Dynamic person pills added by JS -->
+</div>
+
+<!-- TAB BAR -->
+<div id="tabs-bar">
+  <button class="tab active" data-cat="all"      onclick="setTab(this)">
+    <span class="tab-emoji">🌟</span> All <span class="t-count" id="tc-all">0</span>
+  </button>
+  <button class="tab" data-cat="packing"  onclick="setTab(this)">
+    <span class="tab-emoji">🧳</span> Packing <span class="t-count" id="tc-packing">0</span>
+  </button>
+  <button class="tab" data-cat="todo"     onclick="setTab(this)">
+    <span class="tab-emoji">✅</span> To-Do <span class="t-count" id="tc-todo">0</span>
+  </button>
+  <button class="tab" data-cat="shopping" onclick="setTab(this)">
+    <span class="tab-emoji">🛒</span> Shopping <span class="t-count" id="tc-shopping">0</span>
+  </button>
+  <button class="tab" data-cat="places"   onclick="setTab(this)">
+    <span class="tab-emoji">📍</span> Places <span class="t-count" id="tc-places">0</span>
+  </button>
+  <button class="tab" data-cat="food"     onclick="setTab(this)">
+    <span class="tab-emoji">🍛</span> Food <span class="t-count" id="tc-food">0</span>
+  </button>
+  <button class="tab" data-cat="medicine" onclick="setTab(this)">
+    <span class="tab-emoji">💊</span> Medicines <span class="t-count" id="tc-medicine">0</span>
+  </button>
+  <button class="tab" data-cat="docs"     onclick="setTab(this)">
+    <span class="tab-emoji">📄</span> Docs <span class="t-count" id="tc-docs">0</span>
+  </button>
+  <button class="tab" data-cat="itinerary" onclick="setTab(this)">
+    <span class="tab-emoji">🗺️</span> Itinerary
+  </button>
+  <button class="tab" data-cat="notes"    onclick="setTab(this)">
+    <span class="tab-emoji">📝</span> Notes
+  </button>
+</div>
+
+<!-- STATS BAR -->
+<div id="stats-bar">
+  <div class="stat-chip"><span class="stat-num" id="stat-done">0</span> done</div>
+  <div class="progress-wrap"><div id="progress-fill" style="width:0%"></div></div>
+  <div class="stat-chip"><span class="stat-num" id="stat-left">0</span> left</div>
+</div>
+
+<!-- LIST WRAP -->
+<div id="list-wrap"></div>
+
+<!-- EMPTY STATE -->
+<div id="empty-state">
+  <div class="es-icon">🏔️</div>
+  <div class="es-title">Nothing here yet!</div>
+  <div class="es-sub">Tap the <strong>+ button</strong> below<br>to start adding to your Uttarakhand trip 🙏</div>
+</div>
+
+<!-- ITINERARY VIEW -->
+<div id="itinerary-view">
+  <div class="itin-coming">
+    <div class="itin-icon">🗺️</div>
+    <div class="itin-title">Itinerary Coming Soon</div>
+    <div class="itin-desc">
+      The detailed day-by-day itinerary will be added here once the plan is confirmed.
+      Share it with Kunj and he'll set it up! 🙏
+    </div>
+  </div>
+  <div style="font-family:'Cinzel',serif;font-size:12px;color:var(--text-l);letter-spacing:1px;margin:16px 0 10px;text-transform:uppercase;">Planned Pilgrimage Route</div>
+  <div class="route-card">
+    <div class="route-stop">
+      <div class="stop-num">1</div>
+      <div><div class="stop-name">🏠 Departure (Home)</div><div class="stop-dist">Starting point</div></div>
+    </div>
+    <div class="route-stop">
+      <div class="stop-num">2</div>
+      <div><div class="stop-name">🕉️ Haridwar / Rishikesh</div><div class="stop-dist">Gateway to Char Dham</div></div>
+    </div>
+    <div class="route-stop">
+      <div class="stop-num">3</div>
+      <div><div class="stop-name">🌸 Yamunotri</div><div class="stop-dist">Source of Yamuna River</div></div>
+    </div>
+    <div class="route-stop">
+      <div class="stop-num">4</div>
+      <div><div class="stop-name">✨ Gangotri</div><div class="stop-dist">Source of Ganga River</div></div>
+    </div>
+    <div class="route-stop">
+      <div class="stop-num">5</div>
+      <div><div class="stop-name">🏔️ Kedarnath</div><div class="stop-dist">Shiva's sacred shrine, 3,583m</div></div>
+    </div>
+    <div class="route-stop">
+      <div class="stop-num">6</div>
+      <div><div class="stop-name">🌺 Badrinath</div><div class="stop-dist">Char Dham completion, 3,133m</div></div>
+    </div>
+    <div class="route-stop">
+      <div class="stop-num">7</div>
+      <div><div class="stop-name">🏠 Return Home</div><div class="stop-dist">With blessings 🙏</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- NOTES VIEW -->
+<div id="notes-view">
+  <div style="font-family:'Cinzel',serif;font-size:11px;color:var(--text-l);letter-spacing:1px;margin-bottom:10px;text-transform:uppercase;">
+    📝 Shared Trip Notes — visible to everyone
+  </div>
+  <textarea class="notes-textarea f-input" id="notes-area"
+    placeholder="Write anything here — important contacts, hotel details, tips, reminders..."></textarea>
+  <button class="notes-save-btn submit-btn" onclick="saveNotes()">Save Notes 💾</button>
+</div>
+
+<!-- FAB -->
+<button id="fab" onclick="openAddSheet()">+</button>
+
+<!-- OVERLAY -->
+<div id="overlay" onclick="closeAll()"></div>
+
+<!-- ADD SHEET -->
+<div class="sheet" id="add-sheet">
+  <div class="sh-handle"></div>
+  <div class="sh-hdr">
+    <span class="sh-title">✨ Add to List</span>
+    <button class="sh-x" onclick="closeAll()">✕</button>
+  </div>
+  <div class="sh-body">
+    <div class="f-label">What to add?</div>
+    <textarea class="f-input f-textarea" id="add-txt"
+      placeholder="e.g. Warm jacket for Kedarnath, Book helicopter tickets..."></textarea>
+
+    <div class="f-label">Category</div>
+    <div class="cat-grid" id="cat-grid">
+      <button class="cat-opt" data-c="packing"  onclick="pickCat(this)">🧳 Packing</button>
+      <button class="cat-opt" data-c="todo"     onclick="pickCat(this)">✅ To-Do</button>
+      <button class="cat-opt" data-c="shopping" onclick="pickCat(this)">🛒 Shopping</button>
+      <button class="cat-opt" data-c="places"   onclick="pickCat(this)">📍 Places</button>
+      <button class="cat-opt" data-c="food"     onclick="pickCat(this)">🍛 Food</button>
+      <button class="cat-opt" data-c="medicine" onclick="pickCat(this)">💊 Medicines</button>
+      <button class="cat-opt" data-c="docs"     onclick="pickCat(this)">📄 Documents</button>
+    </div>
+
+    <div class="f-label">Adding as</div>
+    <div class="add-by-box">
+      <div class="u-avatar" id="add-avatar" style="width:34px;height:34px;font-size:14px;">?</div>
+      <div>
+        <div class="ab-lbl">Your name</div>
+        <div class="ab-name" id="add-by-name">Not set</div>
+      </div>
+    </div>
+
+    <button class="submit-btn" id="add-btn" onclick="submitItem()">Add to Trip 🙏</button>
+  </div>
+</div>
+
+<!-- NAME SHEET -->
+<div class="sheet" id="name-sheet">
+  <div class="sh-handle"></div>
+  <div class="sh-hdr">
+    <span class="sh-title">🙏 Who are you?</span>
+    <button class="sh-x" id="name-close" onclick="closeNameSheet()">✕</button>
+  </div>
+  <div class="sh-body">
+    <div class="f-label">Quick pick</div>
+    <div class="name-presets">
+      <button class="name-pre" onclick="presetName('Kunj')">Kunj 💻</button>
+      <button class="name-pre" onclick="presetName('Khushi')">Khushi 💕</button>
+      <button class="name-pre" onclick="presetName('Didi')">Didi 👧</button>
+      <button class="name-pre" onclick="presetName('Papa')">Papa 👨</button>
+      <button class="name-pre" onclick="presetName('Mummy')">Mummy 👩</button>
+      <button class="name-pre" onclick="presetName('Nana')">Nana 👴</button>
+      <button class="name-pre" onclick="presetName('Nani')">Nani 👵</button>
+    </div>
+    <div class="f-label" style="margin-top:12px;">Or type your name</div>
+    <input class="f-input" id="name-inp" type="text"
+      placeholder="Enter your name..." maxlength="20">
+    <button class="submit-btn" onclick="saveName()">Let's Go! 🏔️</button>
+  </div>
+</div>
+
+<!-- DELETE CONFIRM -->
+<div id="del-overlay">
+  <div class="del-sheet">
+    <div class="del-icon">🗑️</div>
+    <div class="del-title">Remove this item?</div>
+    <div class="del-sub" id="del-preview">...</div>
+    <div class="del-btns">
+      <button class="del-cancel" onclick="closeDelOverlay()">Keep it</button>
+      <button class="del-ok"     onclick="confirmDel()">Yes, remove</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<!-- ═══════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════ -->
+<script>
+
+// ─── FIREBASE CONFIG ─────────────────────────────
+// REPLACE all YOUR_... values with your Firebase project config
+// (See setup banner at top of page for instructions)
+const firebaseConfig = {
+  apiKey:            "YOUR_API_KEY",
+  authDomain:        "YOUR_AUTH_DOMAIN",
+  projectId:         "YOUR_PROJECT_ID",
+  storageBucket:     "YOUR_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId:             "YOUR_APP_ID"
+};
+// ─────────────────────────────────────────────────
+
+// ─── CATEGORY CONFIG ──────────────────────────────
+const CATS = {
+  packing:  { label:'Packing',   emoji:'🧳', color:'#4A90D9', bg:'#EBF4FF' },
+  todo:     { label:'To-Do',     emoji:'✅', color:'#27AE60', bg:'#E8F8EE' },
+  shopping: { label:'Shopping',  emoji:'🛒', color:'#E67E22', bg:'#FEF3E7' },
+  places:   { label:'Places',    emoji:'📍', color:'#8E44AD', bg:'#F5EDF9' },
+  food:     { label:'Food',      emoji:'🍛', color:'#C0392B', bg:'#FDEDEC' },
+  medicine: { label:'Medicines', emoji:'💊', color:'#16A085', bg:'#E8F6F3' },
+  docs:     { label:'Docs',      emoji:'📄', color:'#607D8B', bg:'#F2F3F4' },
+};
+
+const USER_PALETTE = [
+  '#F4821E','#E91E63','#9C27B0','#2196F3','#4CAF50',
+  '#FF5722','#009688','#795548','#3F51B5','#FF9800'
+];
+
+// ─── APP STATE ────────────────────────────────────
+let db         = null;
+let items      = [];
+let curCat     = 'all';
+let curPerson  = 'all';
+let pendingDel = null;
+let selCat     = '';
+let unsub      = null;
+let currentUser = localStorage.getItem('mp_name') || '';
+
+// ─── UTILS ────────────────────────────────────────
+function nameColor(name) {
+  if (!name) return '#CCC';
+  let h = 0;
+  for (let i = 0; i < name.length; i++) h = name.charCodeAt(i) + ((h << 5) - h);
+  return USER_PALETTE[Math.abs(h) % USER_PALETTE.length];
+}
+function initial(name) { return (name||'?').charAt(0).toUpperCase(); }
+function esc(s) {
+  const d = document.createElement('div');
+  d.appendChild(document.createTextNode(s));
+  return d.innerHTML;
+}
+function timeAgo(ts) {
+  if (!ts) return '';
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  const s = (Date.now() - d.getTime()) / 1000;
+  if (s < 60)    return 'just now';
+  if (s < 3600)  return Math.floor(s/60) + 'm ago';
+  if (s < 86400) return Math.floor(s/3600) + 'h ago';
+  return Math.floor(s/86400) + 'd ago';
+}
+
+// ─── FIREBASE INIT ───────────────────────────────
+function init() {
+  if (firebaseConfig.apiKey === 'YOUR_API_KEY') {
+    document.getElementById('setup-banner').classList.add('on');
+    loadLocal(); return;
+  }
+  try {
+    firebase.initializeApp(firebaseConfig);
+    db = firebase.firestore();
+    startListener();
+    loadNotes();
+  } catch(e) {
+    console.error(e);
+    toast('⚠️ Firebase error — using local mode');
+    loadLocal();
+  }
+}
+
+function startListener() {
+  if (unsub) unsub();
+  unsub = db.collection('mp-items')
+    .orderBy('createdAt','desc')
+    .onSnapshot(snap => {
+      items = snap.docs.map(d => ({id:d.id, ...d.data()}));
+      cacheLocal();
+      render(); updateCounts(); updateStats(); updatePersonFilter();
+    }, err => {
+      console.error(err);
+      toast('⚠️ Showing cached data');
+      loadLocal();
+    });
+}
+
+function loadLocal() {
+  const s = localStorage.getItem('mp_items');
+  items = s ? JSON.parse(s) : [];
+  render(); updateCounts(); updateStats(); updatePersonFilter();
+}
+function cacheLocal() {
+  localStorage.setItem('mp_items', JSON.stringify(items));
+}
+
+// ─── NOTES (Firebase or local) ───────────────────
+function loadNotes() {
+  if (!db) {
+    document.getElementById('notes-area').value = localStorage.getItem('mp_notes') || '';
+    return;
+  }
+  db.collection('mp-meta').doc('notes').get().then(d => {
+    if (d.exists) document.getElementById('notes-area').value = d.data().text || '';
+  });
+}
+async function saveNotes() {
+  const val = document.getElementById('notes-area').value;
+  if (db) {
+    await db.collection('mp-meta').doc('notes').set({ text: val });
+  } else {
+    localStorage.setItem('mp_notes', val);
+  }
+  toast('📝 Notes saved!');
+}
+
+// ─── ADD ITEM ─────────────────────────────────────
+async function submitItem() {
+  const txt = document.getElementById('add-txt').value.trim();
+  if (!txt)    { toast('Write something first!'); return; }
+  if (!selCat) { toast('Pick a category!'); return; }
+  if (!currentUser) { closeAll(); openNameSheet(); return; }
+
+  const btn = document.getElementById('add-btn');
+  btn.disabled = true; btn.textContent = 'Adding... 🙏';
+
+  const item = {
+    text: txt, category: selCat,
+    addedBy: currentUser, checked: false,
+    createdAt: new Date()
+  };
+
+  try {
+    if (db) {
+      await db.collection('mp-items').add({
+        ...item, createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    } else {
+      item.id = Date.now().toString();
+      item.createdAt = new Date().toISOString();
+      items.unshift(item);
+      cacheLocal(); render(); updateCounts(); updateStats(); updatePersonFilter();
+    }
+    closeAll();
+    toast('✨ Added to the list!');
+    document.getElementById('add-txt').value = '';
+    selCat = '';
+    document.querySelectorAll('.cat-opt').forEach(b => b.classList.remove('sel'));
+  } catch(e) {
+    console.error(e); toast('❌ Could not add. Try again.');
+  }
+  btn.disabled = false; btn.textContent = 'Add to Trip 🙏';
+}
+
+// ─── TOGGLE CHECK ────────────────────────────────
+async function toggleCheck(id) {
+  const item = items.find(i => i.id === id);
+  if (!item) return;
+  const v = !item.checked;
+  if (db) {
+    await db.collection('mp-items').doc(id).update({ checked: v }).catch(console.error);
+  } else {
+    item.checked = v;
+    cacheLocal(); render(); updateStats();
+  }
+}
+
+// ─── DELETE ──────────────────────────────────────
+function askDelete(id) {
+  const item = items.find(i => i.id === id);
+  if (!item) return;
+  pendingDel = id;
+  const preview = item.text.substring(0,55) + (item.text.length > 55 ? '…' : '');
+  document.getElementById('del-preview').textContent = `"${preview}"`;
+  document.getElementById('del-overlay').classList.add('on');
+}
+function closeDelOverlay() {
+  document.getElementById('del-overlay').classList.remove('on');
+  pendingDel = null;
+}
+async function confirmDel() {
+  if (!pendingDel) return;
+  if (db) {
+    await db.collection('mp-items').doc(pendingDel).delete().catch(console.error);
+  } else {
+    items = items.filter(i => i.id !== pendingDel);
+    cacheLocal(); render(); updateCounts(); updateStats();
+  }
+  closeDelOverlay();
+  toast('🗑️ Removed');
+}
+
+// ─── RENDER LIST ─────────────────────────────────
+function render() {
+  const wrap  = document.getElementById('list-wrap');
+  const empty = document.getElementById('empty-state');
+  const itin  = document.getElementById('itinerary-view');
+  const notes = document.getElementById('notes-view');
+  const statsBar = document.getElementById('stats-bar');
+  const fab   = document.getElementById('fab');
+
+  // Special views
+  if (curCat === 'itinerary') {
+    wrap.style.display  = 'none'; empty.classList.remove('on');
+    itin.classList.add('on'); notes.classList.remove('on');
+    statsBar.style.display = 'none'; fab.style.display = 'none';
+    return;
+  }
+  if (curCat === 'notes') {
+    wrap.style.display  = 'none'; empty.classList.remove('on');
+    itin.classList.remove('on'); notes.classList.add('on');
+    statsBar.style.display = 'none'; fab.style.display = 'none';
+    return;
+  }
+
+  itin.classList.remove('on'); notes.classList.remove('on');
+  wrap.style.display = 'flex'; statsBar.style.display = 'flex';
+  fab.style.display = 'flex';
+
+  let filtered = items;
+  if (curCat !== 'all') filtered = filtered.filter(i => i.category === curCat);
+  if (curPerson !== 'all') filtered = filtered.filter(i => i.addedBy === curPerson);
+
+  if (filtered.length === 0) {
+    wrap.innerHTML = ''; empty.classList.add('on'); return;
+  }
+  empty.classList.remove('on');
+
+  wrap.innerHTML = filtered.map(item => {
+    const cat   = CATS[item.category] || CATS.todo;
+    const color = nameColor(item.addedBy);
+    const init  = initial(item.addedBy);
+    const ago   = timeAgo(item.createdAt);
+    return `
+    <div class="item-card" style="border-left-color:${cat.color}">
+      <div class="i-check ${item.checked?'done-check':''}"
+           onclick="toggleCheck('${item.id}')"></div>
+      <div class="i-body">
+        <div class="i-text ${item.checked?'struck':''}">${esc(item.text)}</div>
+        <div class="i-meta">
+          <span class="by-chip">
+            <span class="by-dot" style="background:${color}">${init}</span>
+            ${esc(item.addedBy||'Unknown')}
+          </span>
+          <span class="cat-tag" style="background:${cat.bg};color:${cat.color}">
+            ${cat.emoji} ${cat.label}
+          </span>
+          ${ago ? `<span class="i-time">${ago}</span>` : ''}
+        </div>
+      </div>
+      <button class="i-del" onclick="askDelete('${item.id}')">🗑️</button>
+    </div>`;
+  }).join('');
+}
+
+// ─── COUNTS & STATS ──────────────────────────────
+function updateCounts() {
+  document.getElementById('tc-all').textContent = items.length;
+  Object.keys(CATS).forEach(cat => {
+    const el = document.getElementById(`tc-${cat}`);
+    if (el) el.textContent = items.filter(i => i.category === cat).length;
+  });
+}
+function updateStats() {
+  const visible = curCat === 'all' ? items : items.filter(i => i.category === curCat);
+  const done = visible.filter(i => i.checked).length;
+  const left = visible.length - done;
+  const pct  = visible.length ? Math.round((done/visible.length)*100) : 0;
+  document.getElementById('stat-done').textContent = done;
+  document.getElementById('stat-left').textContent = left;
+  document.getElementById('progress-fill').style.width = pct + '%';
+}
+
+// ─── PERSON FILTER ───────────────────────────────
+function updatePersonFilter() {
+  const names = [...new Set(items.map(i => i.addedBy).filter(Boolean))];
+  const strip = document.getElementById('filter-strip');
+  const allBtn = strip.querySelector('[data-person="all"]');
+  // Remove old pills (keep "Everyone")
+  [...strip.querySelectorAll('[data-person]:not([data-person="all"])')].forEach(b => b.remove());
+  names.forEach(name => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-pill';
+    btn.dataset.person = name;
+    const c = nameColor(name);
+    btn.innerHTML = `<span class="f-dot" style="background:${c}">${initial(name)}</span> ${esc(name)}`;
+    btn.onclick = () => setPersonFilter(btn);
+    strip.appendChild(btn);
+  });
+}
+function setPersonFilter(btn) {
+  document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  curPerson = btn.dataset.person;
+  render(); updateStats();
+}
+
+// ─── TABS ─────────────────────────────────────────
+function setTab(btn) {
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  curCat = btn.dataset.cat;
+  render(); updateStats();
+}
+
+// ─── CAT PICKER IN MODAL ─────────────────────────
+function pickCat(btn) {
+  document.querySelectorAll('.cat-opt').forEach(b => b.classList.remove('sel'));
+  btn.classList.add('sel');
+  selCat = btn.dataset.c;
+}
+
+// ─── OPEN / CLOSE MODALS ─────────────────────────
+function openAddSheet() {
+  // Pre-select cat if on a cat tab
+  if (curCat !== 'all' && curCat !== 'itinerary' && curCat !== 'notes') {
+    const opt = document.querySelector(`.cat-opt[data-c="${curCat}"]`);
+    if (opt) pickCat(opt);
+  }
+  refreshAddByDisplay();
+  document.getElementById('add-sheet').classList.add('open');
+  document.getElementById('overlay').classList.add('on');
+  setTimeout(() => document.getElementById('add-txt').focus(), 420);
+}
+
+function openNameSheet() {
+  document.getElementById('name-close').style.display = currentUser ? '' : 'none';
+  document.getElementById('name-inp').value = '';
+  document.getElementById('name-sheet').classList.add('open');
+  document.getElementById('overlay').classList.add('on');
+}
+function closeNameSheet() {
+  document.getElementById('name-sheet').classList.remove('open');
+  document.getElementById('overlay').classList.remove('on');
+}
+function closeAll() {
+  document.querySelectorAll('.sheet').forEach(s => s.classList.remove('open'));
+  document.getElementById('overlay').classList.remove('on');
+}
+
+// ─── NAME ────────────────────────────────────────
+function presetName(n) { document.getElementById('name-inp').value = n; }
+function saveName() {
+  const val = document.getElementById('name-inp').value.trim();
+  if (!val) { toast('Please enter your name!'); return; }
+  currentUser = val;
+  localStorage.setItem('mp_name', val);
+  refreshUserDisplay();
+  closeNameSheet();
+  toast(`Welcome, ${val}! 🙏 Jai Bhole!`);
+}
+
+function refreshUserDisplay() {
+  const c = nameColor(currentUser);
+  const i = initial(currentUser);
+  const av = document.getElementById('u-avatar');
+  av.style.background = currentUser ? c : '#CCC';
+  av.textContent = i;
+  document.getElementById('u-name').textContent = currentUser || 'Tap to set your name';
+  refreshAddByDisplay();
+}
+
+function refreshAddByDisplay() {
+  const c = nameColor(currentUser);
+  const i = initial(currentUser);
+  const av = document.getElementById('add-avatar');
+  av.style.background = currentUser ? c : '#CCC';
+  av.textContent = i;
+  document.getElementById('add-by-name').textContent = currentUser || 'Not set — tap Change above';
+}
+
+// ─── COUNTDOWN ───────────────────────────────────
+function tick() {
+  const target = new Date('2026-05-08T06:00:00+05:30');
+  const diff   = target - Date.now();
+  if (diff <= 0) {
+    ['cd-d','cd-h','cd-m','cd-s'].forEach((id,i) =>
+      document.getElementById(id).textContent = ['🏔️','🙏','✨','🕉️'][i]);
+    return;
+  }
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000)  / 60000);
+  const s = Math.floor((diff % 60000)    / 1000);
+  document.getElementById('cd-d').textContent = String(d).padStart(2,'0');
+  document.getElementById('cd-h').textContent = String(h).padStart(2,'0');
+  document.getElementById('cd-m').textContent = String(m).padStart(2,'0');
+  document.getElementById('cd-s').textContent = String(s).padStart(2,'0');
+}
+
+// ─── TOAST ───────────────────────────────────────
+let toastTimer;
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.classList.add('on');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('on'), 2600);
+}
+
+// ─── START ───────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  init();
+  refreshUserDisplay();
+  tick(); setInterval(tick, 1000);
+
+  // Show name modal if no name stored
+  if (!currentUser) setTimeout(openNameSheet, 900);
+
+  // Enter key in name input
+  document.getElementById('name-inp').addEventListener('keydown', e => {
+    if (e.key === 'Enter') saveName();
+  });
+
+  // Notes: load local if no db yet
+  if (!db) {
+    document.getElementById('notes-area').value = localStorage.getItem('mp_notes') || '';
+  }
+});
+</script>
+</body>
+</html>
