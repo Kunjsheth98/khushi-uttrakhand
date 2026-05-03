@@ -945,45 +945,290 @@ textarea{resize:none;}
 
 <!-- ITINERARY VIEW -->
 <div id="itinerary-view">
-  <div class="itin-coming">
-    <div class="itin-icon">🗺️</div>
-    <div class="itin-title">Itinerary Coming Soon</div>
-    <div class="itin-desc">
-      The detailed day-by-day itinerary will be added here once the plan is confirmed.
-      Share it with Kunj and he'll set it up! 🙏
+
+<style>
+.itin-header-card{
+  background:linear-gradient(135deg,var(--maroon) 0%,#6B1414 100%);
+  border-radius:var(--r);padding:18px 16px;
+  text-align:center;margin-bottom:14px;
+  box-shadow:var(--sh-md);
+}
+.ihc-title{
+  font-family:'Cinzel Decorative',serif;
+  font-size:14px;font-weight:700;color:#FFF8EE;
+  margin-bottom:4px;
+}
+.ihc-sub{font-size:11px;color:var(--gold-l);opacity:0.8;letter-spacing:1px;}
+.ihc-contact{
+  margin-top:12px;padding-top:10px;
+  border-top:1px solid rgba(255,255,255,0.15);
+  font-size:11px;color:rgba(255,255,255,0.6);
+}
+.ihc-contact strong{color:var(--gold-l);}
+
+.day-card{
+  background:white;border-radius:var(--r);
+  margin-bottom:12px;overflow:hidden;
+  box-shadow:var(--sh-sm);
+  border:1px solid var(--border);
+}
+.day-header{
+  display:flex;align-items:center;gap:12px;
+  padding:13px 14px;
+  border-bottom:1px solid var(--border-s);
+  background:var(--saffron-l);
+}
+.day-num{
+  width:38px;height:38px;border-radius:12px;
+  background:linear-gradient(135deg,var(--saffron),var(--saffron-d));
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  flex-shrink:0;
+  box-shadow:0 2px 8px rgba(244,130,30,0.3);
+}
+.day-d{font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:white;line-height:1;}
+.day-lbl{font-size:7px;letter-spacing:1px;color:rgba(255,255,255,0.8);text-transform:uppercase;}
+.day-title{font-size:13px;font-weight:800;color:var(--text);line-height:1.3;}
+.day-night{font-size:10px;color:var(--saffron-d);font-weight:700;margin-top:2px;}
+
+.day-body{padding:12px 14px;}
+.stop-row{
+  display:flex;gap:10px;
+  padding:7px 0;
+  border-bottom:1px solid var(--border-s);
+  align-items:flex-start;
+}
+.stop-row:last-child{border-bottom:none;padding-bottom:0;}
+.stop-emoji{font-size:16px;flex-shrink:0;margin-top:1px;}
+.stop-info{}
+.stop-n{font-size:13px;font-weight:700;color:var(--text);}
+.stop-d{font-size:11px;color:var(--text-l);margin-top:2px;line-height:1.4;}
+.own-cost{
+  display:inline-block;
+  background:#FEF3E7;color:#C96710;
+  border-radius:6px;padding:1px 6px;
+  font-size:9px;font-weight:800;
+  letter-spacing:0.5px;
+  margin-top:3px;
+}
+.trek-badge{
+  display:inline-flex;align-items:center;gap:3px;
+  background:#E8F8EE;color:#27AE60;
+  border-radius:6px;padding:1px 6px;
+  font-size:9px;font-weight:800;margin-top:3px;
+}
+.heli-badge{
+  display:inline-flex;align-items:center;gap:3px;
+  background:#EBF4FF;color:#2176C7;
+  border-radius:6px;padding:1px 6px;
+  font-size:9px;font-weight:800;margin-top:3px;
+}
+</style>
+
+<!-- Header -->
+<div class="itin-header-card">
+  <div class="ihc-title">🏔️ 10-Day Char Dham Yatra</div>
+  <div class="ihc-sub">8 May – 17 May 2026 &nbsp;•&nbsp; Uttarakhand</div>
+  <div class="ihc-contact">
+    Arranged by <strong>Pandit Ji Car Rental Services, Haridwar</strong><br>
+    📞 <strong>74539 44966</strong>
+  </div>
+</div>
+
+<!-- DAY 1 -->
+<div class="day-card">
+  <div class="day-header">
+    <div class="day-num"><div class="day-d">1</div><div class="day-lbl">Day</div></div>
+    <div>
+      <div class="day-title">Haridwar → Barkot</div>
+      <div class="day-night">🌙 Night Stay: Barkot</div>
     </div>
   </div>
-  <div style="font-family:'Cinzel',serif;font-size:12px;color:var(--text-l);letter-spacing:1px;margin:16px 0 10px;text-transform:uppercase;">Planned Pilgrimage Route</div>
-  <div class="route-card">
-    <div class="route-stop">
-      <div class="stop-num">1</div>
-      <div><div class="stop-name">🏠 Departure (Home)</div><div class="stop-dist">Starting point</div></div>
-    </div>
-    <div class="route-stop">
-      <div class="stop-num">2</div>
-      <div><div class="stop-name">🕉️ Haridwar / Rishikesh</div><div class="stop-dist">Gateway to Char Dham</div></div>
-    </div>
-    <div class="route-stop">
-      <div class="stop-num">3</div>
-      <div><div class="stop-name">🌸 Yamunotri</div><div class="stop-dist">Source of Yamuna River</div></div>
-    </div>
-    <div class="route-stop">
-      <div class="stop-num">4</div>
-      <div><div class="stop-name">✨ Gangotri</div><div class="stop-dist">Source of Ganga River</div></div>
-    </div>
-    <div class="route-stop">
-      <div class="stop-num">5</div>
-      <div><div class="stop-name">🏔️ Kedarnath</div><div class="stop-dist">Shiva's sacred shrine, 3,583m</div></div>
-    </div>
-    <div class="route-stop">
-      <div class="stop-num">6</div>
-      <div><div class="stop-name">🌺 Badrinath</div><div class="stop-dist">Char Dham completion, 3,133m</div></div>
-    </div>
-    <div class="route-stop">
-      <div class="stop-num">7</div>
-      <div><div class="stop-name">🏠 Return Home</div><div class="stop-dist">With blessings 🙏</div></div>
+  <div class="day-body">
+    <div class="stop-row"><span class="stop-emoji">🌊</span><div class="stop-info"><div class="stop-n">Sahastradhara</div><div class="stop-d">Thousand-fold spring with sulphur water</div></div></div>
+    <div class="stop-row"><span class="stop-emoji">🕉️</span><div class="stop-info"><div class="stop-n">Shiv Temple</div><div class="stop-d">En route blessings</div></div></div>
+    <div class="stop-row"><span class="stop-emoji">💧</span><div class="stop-info"><div class="stop-n">Bhatta Falls</div><div class="stop-d">Beautiful waterfall near Mussoorie</div></div></div>
+    <div class="stop-row"><span class="stop-emoji">🏞️</span><div class="stop-info"><div class="stop-n">Mussoorie Lake</div><div class="stop-d">Scenic lake with boat rides</div></div></div>
+    <div class="stop-row"><span class="stop-emoji">💦</span><div class="stop-info"><div class="stop-n">Kempty Falls</div><div class="stop-d">Iconic waterfall of Mussoorie</div></div></div>
+  </div>
+</div>
+
+<!-- DAY 2 -->
+<div class="day-card">
+  <div class="day-header">
+    <div class="day-num"><div class="day-d">2</div><div class="day-lbl">Day</div></div>
+    <div>
+      <div class="day-title">Barkot → Yamunotri → Barkot</div>
+      <div class="day-night">🌙 Night Stay: Barkot</div>
     </div>
   </div>
+  <div class="day-body">
+    <div class="stop-row"><span class="stop-emoji">🐴</span><div class="stop-info"><div class="stop-n">Barkot → Janki Chatti (Sayanachatti)</div><div class="stop-d">Drive to the base point</div></div></div>
+    <div class="stop-row"><span class="stop-emoji">🏔️</span><div class="stop-info">
+      <div class="stop-n">Yamunotri Temple</div>
+      <div class="stop-d">7 km trek or pony ride to the shrine</div>
+      <span class="trek-badge">🥾 Trek 7km</span> &nbsp; <span class="heli-badge">🐴 Pony</span>
+    </div></div>
+    <div class="stop-row"><span class="stop-emoji">🙏</span><div class="stop-info"><div class="stop-n">Pooja at Yamunotri</div><div class="stop-d">Source of holy Yamuna River</div></div></div>
+    <div class="stop-row"><span class="stop-emoji">🔙</span><div class="stop-info"><div class="stop-n">Return to Barkot</div><div class="stop-d">Back down same route</div></div></div>
+  </div>
+</div>
+
+<!-- DAY 3 -->
+<div class="day-card">
+  <div class="day-header">
+    <div class="day-num"><div class="day-d">3</div><div class="day-lbl">Day</div></div>
+    <div>
+      <div class="day-title">Barkot → Uttarkashi</div>
+      <div class="day-night">🌙 Night Stay: Uttarkashi or Natala</div>
+    </div>
+  </div>
+  <div class="day-body">
+    <div class="stop-row"><span class="stop-emoji">🚗</span><div class="stop-info"><div class="stop-n">Scenic Drive to Uttarkashi</div><div class="stop-d">Through the Bhagirathi valley, approx 100 km</div></div></div>
+    <div class="stop-row"><span class="stop-emoji">🏙️</span><div class="stop-info"><div class="stop-n">Uttarkashi / Natala</div><div class="stop-d">Rest & explore the town, Vishwanath Temple</div></div></div>
+  </div>
+</div>
+
+<!-- DAY 4 -->
+<div class="day-card">
+  <div class="day-header">
+    <div class="day-num"><div class="day-d">4</div><div class="day-lbl">Day</div></div>
+    <div>
+      <div class="day-title">Uttarkashi → Gangotri → Uttarkashi</div>
+      <div class="day-night">🌙 Night Stay: Uttarkashi</div>
+    </div>
+  </div>
+  <div class="day-body">
+    <div class="stop-row"><span class="stop-emoji">🏞️</span><div class="stop-info"><div class="stop-n">Harsil Valley</div><div class="stop-d">Stunning pine-forested valley en route — don't miss it!</div></div></div>
+    <div class="stop-row"><span class="stop-emoji">✨</span><div class="stop-info"><div class="stop-n">Gangotri Temple</div><div class="stop-d">Source of holy Ganga River, 3,100m altitude</div></div></div>
+    <div class="stop-row"><span class="stop-emoji">🙏</span><div class="stop-info"><div class="stop-n">Pooja at Gangotri</div><div class="stop-d">Sacred darshan & holy dip if possible</div></div></div>
+    <div class="stop-row"><span class="stop-emoji">🔙</span><div class="stop-info"><div class="stop-n">Return to Uttarkashi</div><div class="stop-d">Evening return, ~100 km</div></div></div>
+  </div>
+</div>
+
+<!-- DAY 5 -->
+<div class="day-card">
+  <div class="day-header">
+    <div class="day-num"><div class="day-d">5</div><div class="day-lbl">Day</div></div>
+    <div>
+      <div class="day-title">Uttarkashi → Sitapur</div>
+      <div class="day-night">🌙 Night Stay: Sitapur</div>
+    </div>
+  </div>
+  <div class="day-body">
+    <div class="stop-row"><span class="stop-emoji">🚗</span><div class="stop-info"><div class="stop-n">Drive to Sitapur</div><div class="stop-d">Base camp for Kedarnath darshan</div></div></div>
+    <div class="stop-row"><span class="stop-emoji">🏕️</span><div class="stop-info"><div class="stop-n">Rest at Sitapur</div><div class="stop-d">Prepare for the big Kedarnath day ahead 🙏</div></div></div>
+  </div>
+</div>
+
+<!-- DAY 6 -->
+<div class="day-card">
+  <div class="day-header">
+    <div class="day-num"><div class="day-d">6</div><div class="day-lbl">Day</div></div>
+    <div>
+      <div class="day-title">Sitapur → Kedarnath</div>
+      <div class="day-night">🌙 Night Stay: Kedarnath</div>
+    </div>
+  </div>
+  <div class="day-body">
+    <div class="stop-row"><span class="stop-emoji">🚁</span><div class="stop-info">
+      <div class="stop-n">Kedarnath — The Big Day! 🕉️</div>
+      <div class="stop-d">Reach via helicopter, pony, or trekking (18 km)</div>
+      <span class="heli-badge">🚁 Helicopter</span> &nbsp;
+      <span class="trek-badge">🥾 Trek 18km</span> &nbsp;
+      <span class="heli-badge">🐴 Pony</span>
+    </div></div>
+    <div class="stop-row"><span class="stop-emoji">🏔️</span><div class="stop-info"><div class="stop-n">Kedarnath Temple</div><div class="stop-d">One of 12 Jyotirlingas, 3,583m altitude. Har Har Mahadev! 🙏</div></div></div>
+    <div class="stop-row"><span class="stop-emoji">🌙</span><div class="stop-info"><div class="stop-n">Night at Kedarnath</div><div class="stop-d">Experience sunrise at the Himalayas — truly divine</div></div></div>
+  </div>
+</div>
+
+<!-- DAY 7 -->
+<div class="day-card">
+  <div class="day-header">
+    <div class="day-num"><div class="day-d">7</div><div class="day-lbl">Day</div></div>
+    <div>
+      <div class="day-title">Kedarnath → Sitapur</div>
+      <div class="day-night">🌙 Night Stay: Sitapur</div>
+    </div>
+  </div>
+  <div class="day-body">
+    <div class="stop-row"><span class="stop-emoji">🌅</span><div class="stop-info"><div class="stop-n">Morning Aarti at Kedarnath</div><div class="stop-d">Don't miss the early morning aarti — magical!</div></div></div>
+    <div class="stop-row"><span class="stop-emoji">🔙</span><div class="stop-info"><div class="stop-n">Descend to Sitapur</div><div class="stop-d">Return by same route (helicopter / pony / trek)</div></div></div>
+    <div class="stop-row"><span class="stop-emoji">🕉️</span><div class="stop-info">
+      <div class="stop-n">Triyuginarayan Temple</div>
+      <div class="stop-d">Where Lord Shiva & Parvati married — optional visit</div>
+      <span class="own-cost">💰 Own Cost</span>
+    </div></div>
+  </div>
+</div>
+
+<!-- DAY 8 -->
+<div class="day-card">
+  <div class="day-header">
+    <div class="day-num"><div class="day-d">8</div><div class="day-lbl">Day</div></div>
+    <div>
+      <div class="day-title">Sitapur → Pipalkoti</div>
+      <div class="day-night">🌙 Night Stay: Pipalkoti</div>
+    </div>
+  </div>
+  <div class="day-body">
+    <div class="stop-row"><span class="stop-emoji">🕌</span><div class="stop-info">
+      <div class="stop-n">Okhimath</div>
+      <div class="stop-d">Ancient temple town</div>
+      <span class="own-cost">💰 Own Cost</span>
+    </div></div>
+    <div class="stop-row"><span class="stop-emoji">🌲</span><div class="stop-info"><div class="stop-n">Chopta</div><div class="stop-d">"Mini Switzerland of India" — stunning meadows</div></div></div>
+    <div class="stop-row"><span class="stop-emoji">🕉️</span><div class="stop-info"><div class="stop-n">Triyuginarayan Temple</div><div class="stop-d">Divine wedding site of Shiva-Parvati</div></div></div>
+    <div class="stop-row"><span class="stop-emoji">🏔️</span><div class="stop-info"><div class="stop-n">Chandrashila Peak</div><div class="stop-d">360° Himalayan views — breathtaking!</div></div></div>
+    <div class="stop-row"><span class="stop-emoji">🦁</span><div class="stop-info"><div class="stop-n">Narasimha Temple</div><div class="stop-d">Ancient temple en route to Pipalkoti</div></div></div>
+  </div>
+</div>
+
+<!-- DAY 9 -->
+<div class="day-card">
+  <div class="day-header">
+    <div class="day-num"><div class="day-d">9</div><div class="day-lbl">Day</div></div>
+    <div>
+      <div class="day-title">Pipalkoti → Badrinath → Pipalkoti</div>
+      <div class="day-night">🌙 Night Stay: Pipalkoti</div>
+    </div>
+  </div>
+  <div class="day-body">
+    <div class="stop-row"><span class="stop-emoji">🌊</span><div class="stop-info"><div class="stop-n">Tapt Kund</div><div class="stop-d">Holy hot spring — take a dip before temple darshan</div></div></div>
+    <div class="stop-row"><span class="stop-emoji">🌺</span><div class="stop-info"><div class="stop-n">Badrinath Temple</div><div class="stop-d">Final Char Dham! Lord Vishnu's shrine, 3,133m 🙏</div></div></div>
+    <div class="stop-row"><span class="stop-emoji">🏘️</span><div class="stop-info">
+      <div class="stop-n">Mana Village</div>
+      <div class="stop-d">Last village before Tibet — Vyas Cave, Saraswati River</div>
+      <span class="own-cost">💰 Own Cost</span>
+    </div></div>
+    <div class="stop-row"><span class="stop-emoji">🔙</span><div class="stop-info"><div class="stop-n">Return to Pipalkoti</div><div class="stop-d">Char Dham complete! 🎉🙏</div></div></div>
+  </div>
+</div>
+
+<!-- DAY 10 -->
+<div class="day-card">
+  <div class="day-header">
+    <div class="day-num"><div class="day-d">10</div><div class="day-lbl">Day</div></div>
+    <div>
+      <div class="day-title">Pipalkoti → Haridwar</div>
+      <div class="day-night">🏠 Return Home with Blessings</div>
+    </div>
+  </div>
+  <div class="day-body">
+    <div class="stop-row"><span class="stop-emoji">🌊</span><div class="stop-info"><div class="stop-n">Rudraprayag Sangam</div><div class="stop-d">Confluence of Alaknanda & Mandakini rivers</div></div></div>
+    <div class="stop-row"><span class="stop-emoji">🕉️</span><div class="stop-info"><div class="stop-n">Dhari Devi Temple</div><div class="stop-d">Powerful shakti temple — must visit!</div></div></div>
+    <div class="stop-row"><span class="stop-emoji">🌊</span><div class="stop-info"><div class="stop-n">Devprayag Sangam</div><div class="stop-d">Where Alaknanda + Bhagirathi = Ganga begins</div></div></div>
+    <div class="stop-row"><span class="stop-emoji">🧘</span><div class="stop-info"><div class="stop-n">Rishikesh Local</div><div class="stop-d">Laxman Jhula, Ram Jhula, ashrams</div></div></div>
+    <div class="stop-row"><span class="stop-emoji">🏠</span><div class="stop-info"><div class="stop-n">Drop as per demand</div><div class="stop-d">Journey complete! Jai Bhole ki! 🙏🏔️</div></div></div>
+  </div>
+</div>
+
+<!-- Footer note -->
+<div style="text-align:center;padding:10px 0 4px;font-size:11px;color:var(--text-l);font-style:italic;">
+  🕉️ Har Har Mahadev • Jai Badri Vishal 🕉️
+</div>
+
 </div>
 
 <!-- NOTES VIEW -->
@@ -1050,7 +1295,7 @@ textarea{resize:none;}
     <div class="name-presets">
       <button class="name-pre" onclick="presetName('Kunj')">Kunj 💻</button>
       <button class="name-pre" onclick="presetName('Khushi')">Khushi 💕</button>
-      <button class="name-pre" onclick="presetName('Janvi')">Janvi 👧</button>
+      <button class="name-pre" onclick="presetName('Didi')">Didi 👧</button>
       <button class="name-pre" onclick="presetName('Papa')">Papa 👨</button>
       <button class="name-pre" onclick="presetName('Mummy')">Mummy 👩</button>
       <button class="name-pre" onclick="presetName('Nana')">Nana 👴</button>
